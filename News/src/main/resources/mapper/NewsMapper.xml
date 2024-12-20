@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.continew.admin.news.mapper.NewsMapper">
+
+    <sql id="getUser">
+        SELECT
+            u.username,
+            u.gender,
+            u.email
+        FROM sys_user as u
+        WHERE u.id = #{id}
+    </sql>
+
+    <resultMap id="NewsDo" type="top.continew.admin.news.model.NewsDO">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="gender" column="gender"/>
+        <result property="email" column="email"/>
+    </resultMap>
+
+    <select id="getUserById" resultMap="NewsDo">
+        SELECT
+            u.username,
+            u.gender,
+            u.email
+        FROM sys_user as u
+        WHERE u.id = #{id}
+    </select>
+</mapper>
