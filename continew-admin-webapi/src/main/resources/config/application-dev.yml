@@ -22,10 +22,10 @@ spring:
 --- ### 数据源配置
 spring.datasource:
   type: com.zaxxer.hikari.HikariDataSource
-  url: jdbc:p6spy:mysql://localhost:3305/continew_demo?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true&rewriteBatchedStatements=true&autoReconnect=true&maxReconnects=10&failOverReadOnly=false
+  url: jdbc:p6spy:mysql://localhost:3306/anti_uniapp?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true&rewriteBatchedStatements=true&autoReconnect=true&maxReconnects=10&failOverReadOnly=false
   username: root
 #  password: ${DB_PWD:Zjy}
-  password: "Zjy075454.."
+  password: "075454"
   driver-class-name: com.p6spy.engine.spy.P6SpyDriver
   # PostgreSQL 配置
 #  url: jdbc:p6spy:postgresql://${DB_HOST:127.0.0.1}:${DB_PORT:5432}/${DB_NAME:continew_admin}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=false&allowMultiQueries=true&rewriteBatchedStatements=true&autoReconnect=true&maxReconnects=10&failOverReadOnly=false
@@ -61,7 +61,7 @@ spring.data:
     # 端口（默认 6379）
     port: ${REDIS_PORT:6379}
     # 密码（未设置密码时请注释掉）
-    password: ${REDIS_PWD:075454}
+#    password: ${REDIS_PWD:075454}
     # 数据库索引
     database: ${REDIS_DB:0}
     # 连接超时时间

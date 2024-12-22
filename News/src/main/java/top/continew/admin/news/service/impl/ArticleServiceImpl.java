@@ -15,7 +15,7 @@
  */
 
 package top.continew.admin.news.service.impl;
-
+import top.continew.starter.cache.redisson.util.RedisUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import top.continew.admin.news.mapper.ArticleMapper;
@@ -28,12 +28,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ArticleServiceImpl implements ArticleService {
 
+    // 设置常量名
+    private static final String CACHE_NAME = "articleCache";
+
     private final ArticleMapper articleMapper;
 
     @Override
     public List<ArticleDO> getAllArticle() {
         List<ArticleDO> articleDOList = articleMapper.getAllArticle();
-        System.out.println("articleDOList = " + articleDOList);
+        // 是否需要存入缓存
+//        List<ArticleDO> cacheArticleDOList = RedisUtils.get(CACHE_NAME);
+//        // 用lambda表达式判断是否为空
+//        if (cacheArticleDOList == null) {
+//            RedisUtils.setList(CACHE_NAME,  articleDOList);
+//        }
         return articleDOList;
     }
 }
