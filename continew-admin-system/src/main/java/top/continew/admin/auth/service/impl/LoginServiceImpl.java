@@ -121,6 +121,29 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
+    public String weiXinLogin(String openId) {
+        // 1.查看是否存在当前用户
+        UserDO user = userService.getByUsername("Wx" + openId);
+        // 2.如果不存在就创建一个用户
+        if (ObjectUtil.isNull(user)) {
+            UserDO iUser = new UserDO();
+            iUser.setNickname("微信用户");
+            iUser.setUsername("wx" + openId);
+            iUser.setGender(GenderEnum.UNKNOWN);
+            iUser.setIsSystem(Boolean.TRUE);
+            iUser.setDeptId(SysConstants.SUPER_DEPT_ID);
+            iUser.setPassword(passwordEncoder.encode("123456"));
+            iUser.setCreateTime(LocalDateTime.now());
+            userService.add(iUser);
+            user = userService.getByUsername("Wx" + openId);
+            ArrayList<Long> arrayList = new ArrayList<>();
+            arrayList.add(547888897925840928L);
+            userRoleService.add(arrayList, user.getId());
+        }
+        return this.login(user);
+    }
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
     public String socialLogin(AuthUser authUser) {
         String source = authUser.getSource();

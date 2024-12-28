@@ -57,6 +57,14 @@ public interface LoginService {
     String emailLogin(String email);
 
     /**
+     * 微信登录
+     *
+     * @param openId openId
+     * @return 令牌
+     */
+    String weiXinLogin(String openId);
+
+    /**
      * 三方账号登录
      *
      * @param authUser 三方账号信息

@@ -61,15 +61,15 @@ public class MyBatisPlusMetaObjectHandler implements MetaObjectHandler {
             if (null == metaObject) {
                 return;
             }
-            Long createUser = UserContextHolder.getUserId();
+//            Long createUser = UserContextHolder.getUserId();
             LocalDateTime createTime = LocalDateTime.now();
             if (metaObject.getOriginalObject() instanceof BaseDO baseDO) {
                 // 继承了 BaseDO 的类，填充创建信息字段
-                baseDO.setCreateUser(ObjectUtil.defaultIfNull(baseDO.getCreateUser(), createUser));
+                baseDO.setCreateUser(ObjectUtil.defaultIfNull(baseDO.getCreateUser(), 1L));
                 baseDO.setCreateTime(ObjectUtil.defaultIfNull(baseDO.getCreateTime(), createTime));
             } else {
                 // 未继承 BaseDO 的类，如存在创建信息字段则进行填充
-                this.fillFieldValue(metaObject, CREATE_USER, createUser, false);
+                this.fillFieldValue(metaObject, CREATE_USER, 1L, false);
                 this.fillFieldValue(metaObject, CREATE_TIME, createTime, false);
             }
         } catch (Exception e) {

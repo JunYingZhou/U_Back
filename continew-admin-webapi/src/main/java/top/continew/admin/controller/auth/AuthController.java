@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 import top.continew.admin.auth.model.req.AccountLoginReq;
 import top.continew.admin.auth.model.req.EmailLoginReq;
 import top.continew.admin.auth.model.req.PhoneLoginReq;
+import top.continew.admin.auth.model.req.WeiXinLoginReq;
 import top.continew.admin.auth.model.resp.LoginResp;
 import top.continew.admin.auth.model.resp.RouteResp;
 import top.continew.admin.auth.model.resp.UserInfoResp;
@@ -105,6 +106,15 @@ public class AuthController {
         ValidationUtils.throwIfNotEqualIgnoreCase(loginReq.getCaptcha(), captcha, CAPTCHA_ERROR);
         RedisUtils.delete(captchaKey);
         String token = loginService.emailLogin(email);
+        return LoginResp.builder().token(token).build();
+    }
+
+    @SaIgnore
+    @Operation(summary = "微信登录", description = "登录微信小程序的openId")
+    @PostMapping("/openId")
+    public LoginResp weiXinLogin(@RequestBody WeiXinLoginReq loginReq) {
+        String Code = loginReq.getOpenId();
+        String token = loginService.weiXinLogin(Code);
         return LoginResp.builder().token(token).build();
     }
 
