@@ -42,4 +42,9 @@ public class LoginResp implements Serializable {
      */
     @Schema(description = "令牌", example = "eyJ0eXAiOiJlV1QiLCJhbGciqiJIUzI1NiJ9.eyJsb2dpblR5cGUiOiJsb29pbiIsImxvZ2luSWQiOjEsInJuU3RyIjoiSjd4SUljYnU5cmNwU09vQ3Uyc1ND1BYYTYycFRjcjAifQ.KUPOYm-2wfuLUSfEEAbpGE527fzmkAJG7sMNcQ0pUZ8")
     private String token;
+
+    /**
+     * 用户id
+     */
+    private Long userId;
 }

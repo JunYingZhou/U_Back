@@ -18,6 +18,7 @@ package top.continew.admin.auth.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import me.zhyd.oauth.model.AuthUser;
+import top.continew.admin.auth.model.resp.LoginResp;
 import top.continew.admin.auth.model.resp.RouteResp;
 
 import java.util.List;

@@ -35,6 +35,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import top.continew.admin.auth.model.resp.LoginResp;
 import top.continew.admin.auth.model.resp.RouteResp;
 import top.continew.admin.auth.service.LoginService;
 import top.continew.admin.common.constant.CacheConstants;
@@ -101,7 +102,7 @@ public class LoginServiceImpl implements LoginService {
         this.checkUserLocked(username, request, isError);
         CheckUtils.throwIf(isError, "用户名或密码错误");
         this.checkUserStatus(user);
-        return this.login(user);
+        return this.login(user) + "id:" + user.getId();
     }
 
     @Override

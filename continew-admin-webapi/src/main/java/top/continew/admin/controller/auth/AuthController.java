@@ -78,7 +78,10 @@ public class AuthController {
         String rawPassword = ExceptionUtils.exToNull(() -> SecureUtils.decryptByRsaPrivateKey(loginReq.getPassword()));
         ValidationUtils.throwIfBlank(rawPassword, "密码解密失败");
         String token = loginService.accountLogin(loginReq.getUsername(), rawPassword, request);
-        return LoginResp.builder().token(token).build();
+        // 解构用户信息
+        String[] split = token.split("id:");
+        // 获取当前用户信息
+        return LoginResp.builder().token(split[0]).userId(Long.valueOf(split[1])).build();
     }
 
     @SaIgnore
