@@ -17,7 +17,9 @@
 package top.continew.admin.controller.system;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.annotation.SaIgnore;
 import cn.hutool.core.util.ReUtil;
+import com.github.xiaoymin.knife4j.annotations.Ignore;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -47,6 +49,7 @@ import top.continew.starter.extension.crud.model.resp.BaseIdResp;
 import top.continew.starter.extension.crud.util.ValidateGroup;
 
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * 用户管理 API
@@ -63,13 +66,15 @@ public class UserController extends BaseController<UserService, UserResp, UserDe
 
     private final UserService userService;
 
+    @SaIgnore
     @Override
-    public BaseIdResp<Long> add(@Validated(ValidateGroup.Crud.Add.class) @RequestBody UserReq req) {
+    public BaseIdResp<Long> add(@RequestBody UserReq req) {
         String rawPassword = ExceptionUtils.exToNull(() -> SecureUtils.decryptByRsaPrivateKey(req.getPassword()));
         ValidationUtils.throwIfNull(rawPassword, "密码解密失败");
         ValidationUtils.throwIf(!ReUtil
             .isMatch(RegexConstants.PASSWORD, rawPassword), "密码长度为 8-32 个字符，支持大小写字母、数字、特殊字符，至少包含字母和数字");
         req.setPassword(rawPassword);
+        req.setCreateTime(new Date());
         return super.add(req);
     }
 

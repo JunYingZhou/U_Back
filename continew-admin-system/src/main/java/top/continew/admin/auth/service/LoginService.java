@@ -18,8 +18,10 @@ package top.continew.admin.auth.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import me.zhyd.oauth.model.AuthUser;
+import top.continew.admin.auth.model.req.SignUpReq;
 import top.continew.admin.auth.model.resp.LoginResp;
 import top.continew.admin.auth.model.resp.RouteResp;
+import top.continew.admin.system.model.entity.UserDO;
 
 import java.util.List;
 
@@ -64,6 +66,14 @@ public interface LoginService {
      * @return 令牌
      */
     String weiXinLogin(String openId);
+
+    /**
+     * 账号密码注册
+     *
+     * @param userDO signUpReq
+     * @return 令牌
+     */
+    String signUp(UserDO userDO);
 
     /**
      * 三方账号登录

@@ -25,17 +25,15 @@ import java.util.Date;
 @Getter
 @Data
 @Setter
-public class ArticleDO {
+public class CommentDO {
+    private Long commentId;
     private Long articleId;
-    private String articleTitle;
-    private String articleMain;
-    private String articleCoverUrl;
-    private String articleAbstract;
-    private Long articleStarCount;
+    private String commentContent;
     private Long userId;
-    private Long categoryId;
-    private Long isOfficial;
-    private Long isNoname;
+    private Long toUserId;
+    private Long commentRootId;
+    private Long commentLikeCount;
+    private Long commentType;
     private Date createTime;
     private Date modifyTime;
 }

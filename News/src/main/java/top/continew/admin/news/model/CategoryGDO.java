@@ -9,7 +9,7 @@ import java.util.Date;
 @Getter
 @Data
 @Setter
-public class CategoryDO {
+public class CategoryGDO {
     private Integer categoryId;
     private String categoryName;
     private Date createTime;

@@ -1,24 +1,27 @@
 package top.continew.admin.news.controller;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import top.continew.admin.news.model.ArticleDO;
-import top.continew.admin.news.model.CategoryDO;
+import top.continew.admin.news.model.Req.CategoryReq;
+import top.continew.admin.news.model.query.CategoryQuery;
+import top.continew.admin.news.model.resp.CategoryDetailResp;
+import top.continew.admin.news.model.resp.CategoryResp;
 import top.continew.admin.news.service.CategoryService;
+import top.continew.starter.extension.crud.enums.Api;
 
-import java.util.List;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
-@RequiredArgsConstructor
+import org.springframework.web.bind.annotation.*;
+
+import top.continew.starter.extension.crud.annotation.CrudRequestMapping;
+import top.continew.starter.extension.crud.controller.BaseController;
+
+
+/**
+ * 文章种类管理 API
+ *
+ * @author RyanChow
+ * @since 2025/02/14 00:54
+ */
+@Tag(name = "文章种类管理 API")
 @RestController
-@RequestMapping("/anti/category")
-public class CategoryController {
-
-    private final CategoryService categoryService;
-
-    @GetMapping("/list")
-    public List<CategoryDO> getArticleList() {
-        return categoryService.getAllCategory();
-    }
-}
+@CrudRequestMapping(value = "/generator/category", api = {Api.PAGE, Api.GET, Api.ADD, Api.UPDATE, Api.DELETE, Api.EXPORT})
+public class CategoryController extends BaseController<CategoryService, CategoryResp, CategoryDetailResp, CategoryQuery, CategoryReq> {}

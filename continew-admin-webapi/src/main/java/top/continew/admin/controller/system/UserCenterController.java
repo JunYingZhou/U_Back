@@ -16,6 +16,7 @@
 
 package top.continew.admin.controller.system;
 
+import com.github.xiaoymin.knife4j.annotations.Ignore;
 import com.xkcoding.justauth.AuthRequestFactory;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -69,6 +70,7 @@ public class UserCenterController {
     private final UserSocialService userSocialService;
     private final AuthRequestFactory authRequestFactory;
 
+    @Ignore
     @Operation(summary = "修改头像", description = "用户修改个人头像")
     @PostMapping("/avatar")
     public AvatarResp updateAvatar(@NotNull(message = "头像不能为空") MultipartFile avatarFile) throws IOException {

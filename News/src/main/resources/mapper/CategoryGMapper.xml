@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="top.continew.admin.news.mapper.CategoryMapper">
+<mapper namespace="top.continew.admin.news.mapper.CategoryGMapper">
 
-    <resultMap id="CategoryDO" type="top.continew.admin.news.model.CategoryDO">
+    <resultMap id="CategoryDO" type="top.continew.admin.news.model.CategoryGDO">
         <id property="categoryId" column="category_id"/>
         <result property="categoryName" column="category_name"/>
         <result property="createTime" column="create_time"/>

@@ -27,10 +27,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import top.continew.admin.auth.model.req.AccountLoginReq;
-import top.continew.admin.auth.model.req.EmailLoginReq;
-import top.continew.admin.auth.model.req.PhoneLoginReq;
-import top.continew.admin.auth.model.req.WeiXinLoginReq;
+import top.continew.admin.auth.model.req.*;
 import top.continew.admin.auth.model.resp.LoginResp;
 import top.continew.admin.auth.model.resp.RouteResp;
 import top.continew.admin.auth.model.resp.UserInfoResp;
@@ -39,6 +36,7 @@ import top.continew.admin.common.constant.CacheConstants;
 import top.continew.admin.common.context.UserContext;
 import top.continew.admin.common.context.UserContextHolder;
 import top.continew.admin.common.util.SecureUtils;
+import top.continew.admin.system.model.entity.UserDO;
 import top.continew.admin.system.model.resp.UserDetailResp;
 import top.continew.admin.system.service.UserService;
 import top.continew.starter.cache.redisson.util.RedisUtils;
@@ -85,6 +83,18 @@ public class AuthController {
     }
 
     @SaIgnore
+    @Operation(summary = "微信登录", description = "登录微信小程序的openId")
+    @PostMapping("/openId")
+    public LoginResp weiXinLogin(@RequestBody WeiXinLoginReq loginReq) {
+        String Code = loginReq.getOpenId();
+        String token = loginService.weiXinLogin(Code);
+        // 解构用户信息
+        String[] split = token.split("id:");
+        // 获取当前用户信息
+        return LoginResp.builder().token(split[0]).userId(Long.valueOf(split[1])).build();
+    }
+
+    @SaIgnore
     @Operation(summary = "手机号登录", description = "根据手机号和验证码进行登录认证")
     @PostMapping("/phone")
     public LoginResp phoneLogin(@Validated @RequestBody PhoneLoginReq loginReq) {
@@ -112,13 +122,17 @@ public class AuthController {
         return LoginResp.builder().token(token).build();
     }
 
+
+
     @SaIgnore
-    @Operation(summary = "微信登录", description = "登录微信小程序的openId")
-    @PostMapping("/openId")
-    public LoginResp weiXinLogin(@RequestBody WeiXinLoginReq loginReq) {
-        String Code = loginReq.getOpenId();
-        String token = loginService.weiXinLogin(Code);
-        return LoginResp.builder().token(token).build();
+    @Operation(summary = "账号注册", description = "账号密码注册")
+    @PostMapping("/signUp")
+    public LoginResp signUp(@RequestBody UserDO signUpReq) {
+        String token = loginService.signUp(signUpReq);
+        // 解构用户信息
+        String[] split = token.split("id:");
+        // 获取当前用户信息
+        return LoginResp.builder().token(split[0]).userId(Long.valueOf(split[1])).build();
     }
 
     @Operation(summary = "用户退出", description = "注销用户的当前登录")

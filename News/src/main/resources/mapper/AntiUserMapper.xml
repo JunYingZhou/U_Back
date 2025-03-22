@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.continew.admin.news.mapper.AntiUserMapper">
+
+<!--    <resultMap id="ArticleDO" type="top.continew.admin.news.model.ArticleGDO">-->
+<!--        <id property="articleId" column="article_id"/>-->
+<!--        <result property="articleMain" column="article_main"/>-->
+<!--        <result property="articleTitle" column="article_title"/>-->
+<!--        <result property="articleCoverUrl" column="article_cover_url"/>-->
+<!--        <result property="isOfficial" column="is_official"/>-->
+<!--        <result property="articleAbstract" column="article_abstract"/>-->
+<!--        <result property="categoryId" column="category_id"/>-->
+<!--        <result property="userId" column="user_id"/>-->
+<!--    </resultMap>-->
+
+    <select id="getUserInfo" parameterType="Long" resultType="top.continew.admin.news.model.AntiUserDO">
+        SELECT * FROM user WHERE user_id = #{userId}
+    </select>
+
+    <update id="updateUserInfo" parameterType="top.continew.admin.news.model.AntiUserDO">
+        UPDATE user
+        <set>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="userPassword != null">user_password = #{userPassword},</if>
+            <if test="userPhone != null">user_phone = #{userPhone},</if>
+            <if test="userEmail != null">user_email = #{userEmail},</if>
+        </set>
+        WHERE user_id = #{userId}
+    </update>
+
+</mapper>

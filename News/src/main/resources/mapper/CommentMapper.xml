@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.continew.admin.news.mapper.CommentMapper">
+
+    <insert id="addComment">
+        insert into af_comment(article_id, user_id, comment_content, comment_root_id, comment_type, to_user_id) values (#{articleId}, #{userId}, #{commentContent}, #{commentRootId}, #{commentType}, #{toUserId})
+    </insert>
+
+    <update id="updateComment">
+        UPDATE af_comment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="commentContent != null">comment_content = #{commentContent},</if>
+            <if test="commentLikeCount != null">comment_like_count = #{commentLikeCount},</if>
+            <if test="commentType != null">comment_type = #{commentType},</if>
+        </trim>
+        WHERE comment_id = #{commentId}
+    </update>
+
+    <delete id="deleteComment">
+        DELETE FROM af_comment WHERE comment_id = #{commentId}
+    </delete>
+
+    <select id="queryAllComment" resultType="top.continew.admin.news.model.VO.CommentVO">
+        select c.comment_id,
+               c.article_id,
+               c.comment_content,
+               c.user_id,
+               c.to_user_id,
+               c.comment_root_id,
+               c.comment_like_count,
+               c.comment_type,
+               c.create_time,
+               u.avatar,
+               u.nickName
+        from af_comment c
+                 left join sys_user u on c.user_id = u.id
+        where c.article_id = #{articleId}
+
+    </select>
+</mapper>

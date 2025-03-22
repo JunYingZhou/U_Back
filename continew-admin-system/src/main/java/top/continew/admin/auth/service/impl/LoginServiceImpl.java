@@ -35,6 +35,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import top.continew.admin.auth.model.req.SignUpReq;
 import top.continew.admin.auth.model.resp.LoginResp;
 import top.continew.admin.auth.model.resp.RouteResp;
 import top.continew.admin.auth.service.LoginService;
@@ -47,6 +48,7 @@ import top.continew.admin.common.context.UserContextHolder;
 import top.continew.admin.common.context.UserExtraContext;
 import top.continew.admin.common.enums.DisEnableStatusEnum;
 import top.continew.admin.common.enums.GenderEnum;
+import top.continew.admin.common.util.SecureUtils;
 import top.continew.admin.system.enums.MenuTypeEnum;
 import top.continew.admin.system.enums.MessageTemplateEnum;
 import top.continew.admin.system.enums.MessageTypeEnum;
@@ -60,7 +62,9 @@ import top.continew.admin.system.model.resp.MenuResp;
 import top.continew.admin.system.service.*;
 import top.continew.starter.cache.redisson.util.RedisUtils;
 import top.continew.starter.core.autoconfigure.project.ProjectProperties;
+import top.continew.starter.core.util.ExceptionUtils;
 import top.continew.starter.core.util.validate.CheckUtils;
+import top.continew.starter.core.util.validate.ValidationUtils;
 import top.continew.starter.extension.crud.annotation.TreeField;
 import top.continew.starter.extension.crud.util.TreeUtils;
 import top.continew.starter.messaging.websocket.util.WebSocketUtils;
@@ -98,6 +102,7 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public String accountLogin(String username, String password, HttpServletRequest request) {
         UserDO user = userService.getByUsername(username);
+        System.out.println("密码对比"+password+","+user.getPassword()+","+passwordEncoder.encode(password));
         boolean isError = ObjectUtil.isNull(user) || !passwordEncoder.matches(password, user.getPassword());
         this.checkUserLocked(username, request, isError);
         CheckUtils.throwIf(isError, "用户名或密码错误");
@@ -127,6 +132,7 @@ public class LoginServiceImpl implements LoginService {
         UserDO user = userService.getByUsername("Wx" + openId);
         // 2.如果不存在就创建一个用户
         if (ObjectUtil.isNull(user)) {
+            System.out.println("微信用户不存在，创建微信用户");
             UserDO iUser = new UserDO();
             iUser.setNickname("微信用户");
             iUser.setUsername("wx" + openId);
@@ -135,13 +141,47 @@ public class LoginServiceImpl implements LoginService {
             iUser.setDeptId(SysConstants.SUPER_DEPT_ID);
             iUser.setPassword(passwordEncoder.encode("123456"));
             iUser.setCreateTime(LocalDateTime.now());
-            userService.add(iUser);
+            Long add = userService.add(iUser);
+            System.out.println("123123123"+openId);
             user = userService.getByUsername("Wx" + openId);
-            ArrayList<Long> arrayList = new ArrayList<>();
-            arrayList.add(547888897925840928L);
-            userRoleService.add(arrayList, user.getId());
+//            ArrayList<Long> arrayList = new ArrayList<>();
+            RoleDO role = roleService.getByCode(SysConstants.ADMIN_ROLE_CODE);
+            userRoleService.add(Collections.singletonList(role.getId()), add);
+//            arrayList.add(547888897925840928L);
+//            userRoleService.add(arrayList, add);
         }
-        return this.login(user);
+        return this.login(user) +"id:" + user.getId();
+    }
+
+    @Override
+    public String signUp(UserDO userDO) {
+        // 1.查看是否存在当前用户
+        UserDO user = userService.getByUsername(userDO.getUsername());
+        // 2.如果不存在就创建一个用户
+        if (ObjectUtil.isNull(user)) {
+            System.out.println("注册用户不存在，创建微信用户");
+            String rawPassword = ExceptionUtils.exToNull(() -> SecureUtils.decryptByRsaPrivateKey(userDO.getPassword()));
+            ValidationUtils.throwIfNull(rawPassword, "密码解密失败");
+            ValidationUtils.throwIf(!ReUtil
+                    .isMatch(RegexConstants.PASSWORD, rawPassword), "密码长度为 8-32 个字符，支持大小写字母、数字、特殊字符，至少包含字母和数字");
+            UserDO iUser = new UserDO();
+            iUser.setNickname("用户");
+            iUser.setUsername(userDO.getUsername());
+            iUser.setGender(GenderEnum.UNKNOWN);
+            iUser.setIsSystem(Boolean.TRUE);
+            iUser.setDeptId(SysConstants.SUPER_DEPT_ID);
+            iUser.setPassword(rawPassword);
+//            String rawPassword = ExceptionUtils.exToNull(() -> SecureUtils.decryptByRsaPrivateKey(signUpReq.()));
+//            iUser.setPassword(userDO.getPassword());
+            iUser.setCreateTime(LocalDateTime.now());
+            Long add = userService.add(iUser);
+            user = userService.getByUsername(userDO.getUsername());
+            RoleDO role = roleService.getByCode("test");
+            userRoleService.add(Collections.singletonList(role.getId()), add);
+        }else {
+            CheckUtils.throwIf(true, "用户已存在");
+        }
+        return this.login(user) +"id:" + user.getId();
     }
 
     @Override

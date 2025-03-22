@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="top.continew.admin.news.mapper.ArticleGMapper">
+
+    <resultMap id="ArticleDO" type="top.continew.admin.news.model.ArticleGDO">
+        <id property="id" column="id"/>
+        <result property="articleMain" column="article_main"/>
+        <result property="articleTitle" column="article_title"/>
+        <result property="articleCoverUrl" column="article_cover_url"/>
+        <result property="isOfficial" column="is_official"/>
+        <result property="articleAbstract" column="article_abstract"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="userId" column="user_id"/>
+    </resultMap>
+    <insert id="addArticle" parameterType="top.continew.admin.news.model.Req.ArticleGReq" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO af_article (article_title, article_main, article_abstract, category_id, is_official, user_id)
+        VALUES (#{articleReq.articleTitle}, #{articleReq.articleMain}, #{articleReq.articleAbstract}, #{articleReq.categoryId}, #{articleReq.isOfficial}, #{articleReq.userId})
+    </insert>
+    <insert id="insertArtLikeAndStar">
+        INSERT INTO af_like_star (article_id, user_id, type) VALUES (#{articleId}, #{userId}, #{type})
+    </insert>
+
+    <update id="updateArticle">
+        UPDATE af_article
+        <set>
+            <if test="articleGDO.articleTitle != null">
+                article_title = #{articleGDO.articleTitle},
+            </if>
+            <if test="articleGDO.articleMain != null">
+                article_main = #{articleGDO.articleMain},
+            </if>
+            <if test="articleGDO.articleAbstract != null">
+                article_abstract = #{articleGDO.articleAbstract},
+            </if>
+            <if test="articleGDO.articleCoverUrl != null">
+                article_cover_url = #{articleGDO.articleCoverUrl},
+            </if>
+            <if test="articleGDO.categoryId != null">
+                category_id = #{articleGDO.categoryId},
+            </if>
+            <if test="articleGDO.isOfficial != null">
+                is_official = #{articleGDO.isOfficial},
+            </if>
+            <if test="articleGDO.userId != null">
+                user_id = #{articleGDO.userId},
+            </if>
+        </set>
+        WHERE id = #{articleGDO.id}
+    </update>
+
+
+    <select id="getAllArticle" resultMap="ArticleDO">
+        SELECT
+            u.id,
+            u.article_title,
+            u.article_cover_url,
+            u.article_main,
+            u.article_abstract,
+            u.category_id,
+            u.is_official,
+            u.user_id
+        FROM af_article as u
+        <if test="categoryId != null and categoryId != 100">
+            WHERE u.category_id = #{categoryId}
+        </if>
+    </select>
+    <select id="getArtLikeAndStar" resultType="top.continew.admin.news.model.LikeStarDO">
+        SELECT * FROM af_like_star WHERE article_id = #{articleId} and user_id = #{userId} and type = #{type}
+    </select>
+</mapper>

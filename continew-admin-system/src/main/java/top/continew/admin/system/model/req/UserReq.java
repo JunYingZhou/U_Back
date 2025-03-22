@@ -31,6 +31,7 @@ import top.continew.starter.extension.crud.model.req.BaseReq;
 import top.continew.starter.extension.crud.util.ValidateGroup;
 
 import java.io.Serial;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -117,4 +118,7 @@ public class UserReq extends BaseReq {
      */
     @Schema(description = "状态", example = "1")
     private DisEnableStatusEnum status;
+
+    private Date createTime;
+
 }

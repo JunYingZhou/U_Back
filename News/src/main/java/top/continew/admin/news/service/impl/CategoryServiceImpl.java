@@ -1,23 +1,24 @@
 package top.continew.admin.news.service.impl;
 
-
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
+
 import top.continew.admin.news.mapper.CategoryMapper;
-import top.continew.admin.news.model.CategoryDO;
+import top.continew.admin.news.model.Req.CategoryReq;
+import top.continew.admin.news.model.entity.CategoryDO;
+import top.continew.admin.news.model.query.CategoryQuery;
+import top.continew.admin.news.model.resp.CategoryDetailResp;
+import top.continew.admin.news.model.resp.CategoryResp;
 import top.continew.admin.news.service.CategoryService;
+import top.continew.starter.extension.crud.service.impl.BaseServiceImpl;
 
-import java.util.List;
-
+/**
+ * 文章种类业务实现
+ *
+ * @author RyanChow
+ * @since 2025/02/14 00:54
+ */
 @Service
 @RequiredArgsConstructor
-public class CategoryServiceImpl implements CategoryService {
-
-    private final CategoryMapper categoryMapper;
-
-    @Override
-    public List<CategoryDO> getAllCategory() {
-        System.out.println("categoryMapper.getAllCategory() = " + categoryMapper.getAllCategory());
-        return categoryMapper.getAllCategory();
-    }
-}
+public class CategoryServiceImpl extends BaseServiceImpl<CategoryMapper, CategoryDO, CategoryResp, CategoryDetailResp, CategoryQuery, CategoryReq> implements CategoryService {}
