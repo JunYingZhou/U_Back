@@ -19,6 +19,7 @@ package top.continew.admin.news.controller;
 import jakarta.annotation.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import top.continew.admin.news.model.Req.AntiMessageReq;
 import top.continew.admin.news.service.TongYiService;
 
 import java.util.Map;
@@ -39,6 +40,23 @@ public class TongYiController {
      */
     @GetMapping("/getMsg")
     public String getMessage(@RequestParam(value = "msg", defaultValue = "讲一个笑话") String msg) {
+
+
+        return tongYiService.completion(msg);
+    }
+
+    /**
+     * 聊天对话体验
+     *
+     * @param antiMessageReq
+     * @return
+     */
+    @PostMapping("/getAntiMsg")
+    public String getAntiMessage(@RequestBody AntiMessageReq antiMessageReq) {
+        System.out.println("题目种类" + antiMessageReq.getQuestionCategory());
+        System.out.println("题目内容:" +antiMessageReq.getQuestionContent());
+        String msg = "题目的种类是" + antiMessageReq.getQuestionCategory() + ", 请根据题目内容对用户的能力进行分析，并给出数据用做echart图表展示(Echart的数据放在最后，并且是JSON格式，不用markdown的形式)，内容是:" + antiMessageReq.getQuestionContent();
+
         return tongYiService.completion(msg);
     }
 
