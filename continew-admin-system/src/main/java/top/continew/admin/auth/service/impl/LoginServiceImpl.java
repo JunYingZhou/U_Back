@@ -176,7 +176,7 @@ public class LoginServiceImpl implements LoginService {
             iUser.setCreateTime(LocalDateTime.now());
             Long add = userService.add(iUser);
             user = userService.getByUsername(userDO.getUsername());
-            RoleDO role = roleService.getByCode("test");
+            RoleDO role = roleService.getByCode("admin");
             userRoleService.add(Collections.singletonList(role.getId()), add);
         }else {
             CheckUtils.throwIf(true, "用户已存在");

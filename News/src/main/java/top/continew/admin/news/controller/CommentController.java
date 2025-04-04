@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import top.continew.admin.news.model.CommentDO;
+import top.continew.admin.news.model.VO.CommentLikeVO;
 import top.continew.admin.news.model.VO.CommentVO;
 import top.continew.admin.news.service.CommentService;
 import top.continew.admin.news.utils.CommentResp;
@@ -56,6 +57,24 @@ public class CommentController {
     @GetMapping("/delComment/{commentId}")
     public Boolean updateComment(@PathVariable Long commentId){
         return commentService.deleteComment(commentId) > 0;
+    }
+
+    /**
+     * 获取评论列表
+     */
+    @SaIgnore
+    @GetMapping("/addCommentLike/{commentId}/{userId}/{articleId}")
+    public Boolean updateComment1(@PathVariable Long commentId, @PathVariable Long userId, @PathVariable Long articleId){
+        return commentService.addCommentLike(commentId, userId, articleId);
+    }
+
+    /**
+     * 获取评论列表
+     */
+    @SaIgnore
+    @GetMapping("/queryCommentByUserId/{userId}/{articleId}")
+    public List<CommentLikeVO> queryCommentByUserId(@PathVariable Long userId, @PathVariable Long articleId){
+        return commentService.queryCommentByUserId(userId, articleId);
     }
 
 

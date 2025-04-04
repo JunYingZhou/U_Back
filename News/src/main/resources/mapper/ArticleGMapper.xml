@@ -67,4 +67,7 @@
     <select id="getArtLikeAndStar" resultType="top.continew.admin.news.model.LikeStarDO">
         SELECT * FROM af_like_star WHERE article_id = #{articleId} and user_id = #{userId} and type = #{type}
     </select>
+    <select id="getArticleByCommunityId" resultType="top.continew.admin.news.model.resp.ArticleResp">
+        SELECT * from af_article where community_id = #{communityId}
+    </select>
 </mapper>

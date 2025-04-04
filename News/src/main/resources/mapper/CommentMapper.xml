@@ -5,6 +5,9 @@
     <insert id="addComment">
         insert into af_comment(article_id, user_id, comment_content, comment_root_id, comment_type, to_user_id) values (#{articleId}, #{userId}, #{commentContent}, #{commentRootId}, #{commentType}, #{toUserId})
     </insert>
+    <insert id="addCommentLike">
+        insert into af_comment_like(comment_id, user_id, article_id) values (#{commentId}, #{userId}, #{articleId})
+    </insert>
 
     <update id="updateComment">
         UPDATE af_comment
@@ -14,6 +17,12 @@
             <if test="commentType != null">comment_type = #{commentType},</if>
         </trim>
         WHERE comment_id = #{commentId}
+    </update>
+
+    <update id="updateCommentLike">
+        UPDATE af_comment
+        SET comment_like_count = comment_like_count + 1
+        WHERE comment_id = #{commentId} AND comment_like_count >= 0
     </update>
 
     <delete id="deleteComment">
@@ -36,5 +45,8 @@
                  left join sys_user u on c.user_id = u.id
         where c.article_id = #{articleId}
 
+    </select>
+    <select id="queryCommentLikeByUserId" resultType="top.continew.admin.news.model.VO.CommentLikeVO">
+        select distinct * from af_comment_like where user_id = #{userId} and article_id=#{articleId}
     </select>
 </mapper>

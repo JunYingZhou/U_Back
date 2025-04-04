@@ -15,17 +15,22 @@
  */
 
 package top.continew.admin.news.service.impl;
+import cn.dev33.satoken.annotation.SaIgnore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import top.continew.admin.news.mapper.AntiUserMapper;
 import top.continew.admin.news.mapper.CommentMapper;
 import top.continew.admin.news.model.AntiUserDO;
 import top.continew.admin.news.model.CommentDO;
+import top.continew.admin.news.model.VO.CommentLikeVO;
 import top.continew.admin.news.model.VO.CommentVO;
 import top.continew.admin.news.service.AntiUserService;
 import top.continew.admin.news.service.CommentService;
 
 import java.util.List;
+
+import static top.continew.admin.common.context.UserContextHolder.getUserId;
 
 @Service
 @RequiredArgsConstructor
@@ -55,6 +60,19 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public Long deleteComment(Long commentId) {
         return mapper.deleteComment(commentId);
+    }
+
+    @Transactional
+    @Override
+    public Boolean addCommentLike(Long commentId, Long userId, Long articleId) {
+        Long l = mapper.updateCommentLike(commentId);
+        Long l1 = mapper.addCommentLike(commentId, userId, articleId);
+        return l1 > 0 & l > 0;
+    }
+
+    @Override
+    public List<CommentLikeVO> queryCommentByUserId(Long userId, Long articleId) {
+        return mapper.queryCommentLikeByUserId(userId, articleId);
     }
 
 }

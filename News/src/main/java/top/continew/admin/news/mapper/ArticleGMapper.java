@@ -21,12 +21,12 @@ import org.apache.ibatis.annotations.Param;
 import top.continew.admin.news.model.ArticleGDO;
 import top.continew.admin.news.model.LikeStarDO;
 import top.continew.admin.news.model.Req.ArticleGReq;
+import top.continew.admin.news.model.resp.ArticleResp;
 import top.continew.starter.data.mp.base.BaseMapper;
 
 import java.util.List;
 
 @Mapper
-
 public interface ArticleGMapper extends BaseMapper<ArticleGDO> {
 
     List<ArticleGDO> getAllArticle(Long categoryId);
@@ -38,4 +38,6 @@ public interface ArticleGMapper extends BaseMapper<ArticleGDO> {
     LikeStarDO getArtLikeAndStar(Long articleId, Long userId, String type);
 
     Long insertArtLikeAndStar(Long articleId, Long userId, String type);
+
+    List<ArticleResp> getArticleByCommunityId(Long communityId);
 }

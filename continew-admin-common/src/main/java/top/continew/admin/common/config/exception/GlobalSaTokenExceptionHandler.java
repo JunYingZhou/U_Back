@@ -58,6 +58,7 @@ public class GlobalSaTokenExceptionHandler {
     @ExceptionHandler(NotPermissionException.class)
     public R handleNotPermissionException(NotPermissionException e, HttpServletRequest request) {
         log.error("[{}] {}", request.getMethod(), request.getRequestURI(), e);
+        System.out.println(" 权限认证失败 ");
         return R.fail(String.valueOf(HttpStatus.FORBIDDEN.value()), "没有访问权限，请联系管理员授权");
     }
 
@@ -67,6 +68,7 @@ public class GlobalSaTokenExceptionHandler {
     @ExceptionHandler(NotRoleException.class)
     public R handleNotRoleException(NotRoleException e, HttpServletRequest request) {
         log.error("[{}] {}", request.getMethod(), request.getRequestURI(), e);
+        System.out.println(" 角色认证失败 " );
         return R.fail(String.valueOf(HttpStatus.FORBIDDEN.value()), "没有访问权限，请联系管理员授权");
     }
 }
