@@ -17,8 +17,12 @@
 package top.continew.admin.news.controller;
 
 // import org.springframework.ai.chat.client.ChatClient;
+
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import top.continew.admin.news.model.ChatDO;
 import top.continew.admin.news.service.ChatService;
 
@@ -26,14 +30,14 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/anti/chat")
+@RequestMapping("/anti/test")
 //@CrossOrigin(origins = "*")
-public class ChatController {
+public class TestController {
 
     private final ChatService chatService;
 
-    @GetMapping("/getChatInfoByUserId/{userId}/{categoryId}")
-    private List<ChatDO> getChatInfoByUserId(@PathVariable Long userId, @PathVariable Long categoryId)  {
+    @GetMapping("/getTestInfoByUserId/{userId}/{categoryId}")
+    private List<ChatDO> getTestInfoByUserId(@PathVariable Long userId, @PathVariable Long categoryId)  {
         return chatService.getChatById(categoryId, userId);
     }
 

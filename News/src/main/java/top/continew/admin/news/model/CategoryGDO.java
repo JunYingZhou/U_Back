@@ -12,6 +12,7 @@ import java.util.Date;
 public class CategoryGDO {
     private Integer categoryId;
     private String categoryName;
+    private String categoryIcon;
     private Date createTime;
     private Date modifyTime;
 }

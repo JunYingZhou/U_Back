@@ -14,28 +14,19 @@
  * limitations under the License.
  */
 
-package top.continew.admin.news.controller;
+package top.continew.admin.news.service;
 
-// import org.springframework.ai.chat.client.ChatClient;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
 import top.continew.admin.news.model.ChatDO;
-import top.continew.admin.news.service.ChatService;
 
 import java.util.List;
 
-@RestController
-@RequiredArgsConstructor
-@RequestMapping("/anti/chat")
-//@CrossOrigin(origins = "*")
-public class ChatController {
-
-    private final ChatService chatService;
-
-    @GetMapping("/getChatInfoByUserId/{userId}/{categoryId}")
-    private List<ChatDO> getChatInfoByUserId(@PathVariable Long userId, @PathVariable Long categoryId)  {
-        return chatService.getChatById(categoryId, userId);
-    }
-
+public interface TestService {
+    /**
+     * 根据用户id查数据
+     * 
+     * @param categoryId, userId
+     * @return
+     */
+    List<ChatDO> getTestById(Long categoryId, Long userId);
 
 }
