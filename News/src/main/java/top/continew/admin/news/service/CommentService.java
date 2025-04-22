@@ -18,8 +18,10 @@ package top.continew.admin.news.service;
 
 import top.continew.admin.news.model.AntiUserDO;
 import top.continew.admin.news.model.CommentDO;
+import top.continew.admin.news.model.Req.QuestionsReq;
 import top.continew.admin.news.model.VO.CommentLikeVO;
 import top.continew.admin.news.model.VO.CommentVO;
+import top.continew.admin.news.model.resp.QuestionsResp;
 
 import java.util.List;
 
@@ -34,6 +36,9 @@ public interface CommentService {
     Long deleteComment(Long commentId);
 
     Boolean addCommentLike(Long commentId, Long userId, Long articleId);
+
+
+    Long addQuestions(QuestionsResp questionsReq);
 
     List<CommentLikeVO> queryCommentByUserId(Long userId, Long articleId);
 

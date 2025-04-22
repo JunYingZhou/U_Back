@@ -7,6 +7,7 @@ import top.continew.admin.news.mapper.ChatMapper;
 import top.continew.admin.news.model.ChatDO;
 import top.continew.admin.news.model.NewsDO;
 import top.continew.admin.news.model.RepoDO;
+import top.continew.admin.news.model.VO.ChatVO;
 import top.continew.admin.news.service.ChatService;
 
 import java.util.List;
@@ -20,6 +21,11 @@ public class ChatServiceImpl implements ChatService {
     @Override
     public List<ChatDO> getChatById(Long categoryId, Long userId) {
         return chatMapper.getChatById(categoryId, userId);
+    }
+
+    @Override
+    public Long addChatInfo(ChatVO chatDO) {
+        return chatMapper.addChatInfo(chatDO);
     }
 
     @Override

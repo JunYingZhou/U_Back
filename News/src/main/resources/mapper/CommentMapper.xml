@@ -8,6 +8,10 @@
     <insert id="addCommentLike">
         insert into af_comment_like(comment_id, user_id, article_id) values (#{commentId}, #{userId}, #{articleId})
     </insert>
+    <insert id="addQuestions">
+        insert into af_questions(questions_title, questions_content, questions_state, questions_like_count, user_id, is_del, community_id, create_time
+                                 ) values (#{questionsTitle}, #{questionsContent}, #{questionsState}, #{questionsLikeCount}, #{userId}, #{isDel}, #{communityId}, #{createTime})
+    </insert>
 
     <update id="updateComment">
         UPDATE af_comment

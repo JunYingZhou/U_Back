@@ -53,6 +53,8 @@ public class ArticleGController {
     }
 
 
+
+
     @SaIgnore
     @PostMapping("/addArticle")
     public String addArticle(@RequestBody ArticleGReq article) {
@@ -91,6 +93,16 @@ public class ArticleGController {
     public LikeStarDO getArticleLikeStarStatus(@PathVariable String queryIds, @PathVariable String type) {
         String[] tempArr = queryIds.split(",");
         return articleService.getArticleLikeStarStatus(tempArr[0], tempArr[1], type);
+    }
+
+    @GetMapping("/getArticleLikeStarStatusCount/{articleId}/{type}")
+    public Long getArticleLikeStarStatus(@PathVariable Long articleId, @PathVariable String type) {
+        return articleService.getArticleLikeStarStatusCount(articleId, type);
+    }
+
+    @GetMapping("/getArticleCommentCount/{articleId}")
+    public Long getArticleCommentCount(@PathVariable Long articleId) {
+        return articleService.getArticleCommentCount(articleId);
     }
 
     @GetMapping("/insertArticleLikeStarStatus/{queryIds}/{type}")

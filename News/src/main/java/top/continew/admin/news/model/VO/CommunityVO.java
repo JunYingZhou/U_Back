@@ -2,6 +2,7 @@ package top.continew.admin.news.model.VO;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
+import top.continew.admin.news.model.ArticleGDO;
 import top.continew.admin.news.model.resp.ArticleResp;
 import top.continew.admin.news.model.resp.QuestionsResp;
 import top.continew.starter.extension.crud.model.resp.BaseResp;
@@ -76,7 +77,7 @@ public class CommunityVO extends BaseResp {
      * 社区文章
      */
     @Schema(description = "社区文章")
-    private List<ArticleResp> articleList;
+    private List<ArticleGDO> articleList;
 
     /**
      * 社区问题

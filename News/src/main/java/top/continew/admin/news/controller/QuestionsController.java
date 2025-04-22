@@ -1,5 +1,6 @@
 package top.continew.admin.news.controller;
 
+import cn.dev33.satoken.annotation.SaIgnore;
 import top.continew.admin.news.model.Req.QuestionsReq;
 import top.continew.starter.extension.crud.enums.Api;
 
@@ -22,5 +23,6 @@ import top.continew.admin.news.service.QuestionsService;
  */
 @Tag(name = "社区问题管理 API")
 @RestController
+@SaIgnore
 @CrudRequestMapping(value = "/news/questions", api = {Api.PAGE, Api.GET, Api.ADD, Api.UPDATE, Api.DELETE, Api.EXPORT})
 public class QuestionsController extends BaseController<QuestionsService, QuestionsResp, QuestionsDetailResp, QuestionsQuery, QuestionsReq> {}

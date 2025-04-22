@@ -62,6 +62,16 @@ public class ArticleGServiceImpl implements ArticleGService {
     }
 
     @Override
+    public Long getArticleLikeStarStatusCount(Long articleId, String type) {
+        return articleMapper.getArticleLikeCount(articleId, "like");
+    }
+
+    @Override
+    public Long getArticleCommentCount(Long articleId) {
+        return articleMapper.getArticleCommentCount(articleId);
+    }
+
+    @Override
     public Boolean insertArticleLikeStarStatus(String articleId, String userId, String type) {
         Long artLikeAndStar = articleMapper.insertArtLikeAndStar(Long.parseLong(articleId), Long.parseLong(userId), type);
         return artLikeAndStar > 0;

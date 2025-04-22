@@ -17,11 +17,14 @@
 package top.continew.admin.news.controller;
 
 // import org.springframework.ai.chat.client.ChatClient;
+import cn.dev33.satoken.annotation.SaIgnore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import top.continew.admin.news.model.ChatDO;
+import top.continew.admin.news.model.VO.ChatVO;
 import top.continew.admin.news.service.ChatService;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -35,6 +38,15 @@ public class ChatController {
     @GetMapping("/getChatInfoByUserId/{userId}/{categoryId}")
     private List<ChatDO> getChatInfoByUserId(@PathVariable Long userId, @PathVariable Long categoryId)  {
         return chatService.getChatById(categoryId, userId);
+    }
+
+
+    @SaIgnore
+    @PostMapping("/addChatInfo")
+    private Long addChatInfoRes(@RequestBody ChatVO chatDO) {
+        System.out.println("chatDO = " + chatDO);
+        chatDO.setCreateTime(new Date());
+        return chatService.addChatInfo(chatDO);
     }
 
 

@@ -8,6 +8,7 @@ import top.continew.admin.news.mapper.ArticleGMapper;
 import top.continew.admin.news.mapper.ArticleMapper;
 import top.continew.admin.news.mapper.CommunityMapper;
 import top.continew.admin.news.mapper.QuestionsMapper;
+import top.continew.admin.news.model.ArticleGDO;
 import top.continew.admin.news.model.Req.CommunityReq;
 import top.continew.admin.news.model.VO.CommunityVO;
 import top.continew.admin.news.model.entity.CommunityDO;
@@ -40,7 +41,7 @@ public class CommunityServiceImpl extends BaseServiceImpl<CommunityMapper, Commu
         // 获取社区列表
         CommunityVO communityData = baseMapper.getCommunityListByCommunityId(communityId);
         // 获取文章列表
-        List<ArticleResp> articleList = articleMapper.getArticleByCommunityId(communityId);
+        List<ArticleGDO> articleList = articleMapper.getArticleByCommunityId(communityId);
         // 获取问题列表
         List<QuestionsResp> questionsList = questionsMapper.getQuestionsListByCommunityId(communityId);
 

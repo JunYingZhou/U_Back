@@ -32,5 +32,11 @@ public interface ArticleGService {
 
     LikeStarDO getArticleLikeStarStatus(String s, String s1, String type);
 
+    Long getArticleLikeStarStatusCount(Long articleId, String type);
+
+    Long getArticleCommentCount(Long articleId);
+
+
+
     Boolean insertArticleLikeStarStatus(String s, String s1, String type);
 }

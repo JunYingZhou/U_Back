@@ -23,8 +23,10 @@ import top.continew.admin.news.mapper.AntiUserMapper;
 import top.continew.admin.news.mapper.CommentMapper;
 import top.continew.admin.news.model.AntiUserDO;
 import top.continew.admin.news.model.CommentDO;
+import top.continew.admin.news.model.Req.QuestionsReq;
 import top.continew.admin.news.model.VO.CommentLikeVO;
 import top.continew.admin.news.model.VO.CommentVO;
+import top.continew.admin.news.model.resp.QuestionsResp;
 import top.continew.admin.news.service.AntiUserService;
 import top.continew.admin.news.service.CommentService;
 
@@ -68,6 +70,11 @@ public class CommentServiceImpl implements CommentService {
         Long l = mapper.updateCommentLike(commentId);
         Long l1 = mapper.addCommentLike(commentId, userId, articleId);
         return l1 > 0 & l > 0;
+    }
+
+    @Override
+    public Long addQuestions(QuestionsResp questionsReq) {
+        return mapper.addQuestions(questionsReq);
     }
 
     @Override

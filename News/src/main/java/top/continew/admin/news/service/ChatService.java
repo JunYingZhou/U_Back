@@ -19,6 +19,7 @@ package top.continew.admin.news.service;
 import top.continew.admin.news.model.ChatDO;
 import top.continew.admin.news.model.NewsDO;
 import top.continew.admin.news.model.RepoDO;
+import top.continew.admin.news.model.VO.ChatVO;
 
 import java.util.List;
 
@@ -30,6 +31,9 @@ public interface ChatService {
      * @return
      */
     List<ChatDO> getChatById(Long categoryId, Long userId);
+
+
+    Long addChatInfo(ChatVO chatDO);
 
     RepoDO getRepoByCategoryId(Long categoryId);
 

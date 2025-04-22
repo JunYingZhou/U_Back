@@ -2,6 +2,7 @@ package top.continew.admin.news.model.resp;
 
 import java.io.Serial;
 import java.time.*;
+import java.util.Date;
 
 import lombok.Data;
 
@@ -38,31 +39,35 @@ public class QuestionsResp extends BaseResp {
      * 问题状态 0-未回答 1-已回答
      */
     @Schema(description = "问题状态 0-未回答 1-已回答")
-    private Integer questionsState;
+    private Long questionsState;
 
     /**
      * 问题点赞数量
      */
     @Schema(description = "问题点赞数量")
-    private Integer questionsLikeCount;
+    private Long questionsLikeCount;
 
     /**
      * 用户id
      */
     @Schema(description = "用户id")
-    private Integer userId;
+    private Long userId;
 
     /**
      * 0-未 1-已
      */
     @Schema(description = "0-未 1-已")
-    private Integer isDel;
+    private Long isDel;
 
     /**
      * 
      */
     @Schema(description = "")
-    private LocalDateTime modifyTime;
+    private Date modifyTime;
+
+
+//    @Schema(description = "")
+//    private Date createTime;
 
     /**
      * 

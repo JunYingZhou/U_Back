@@ -30,5 +30,7 @@ public class ArticleGReq {
     private String articleAbstract;
     private Long userId;
     private Long categoryId;
+    private Long communityId;
+    private Long isCommunity;
     private Long isOfficial;
 }

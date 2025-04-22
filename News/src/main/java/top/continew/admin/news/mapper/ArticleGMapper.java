@@ -37,7 +37,11 @@ public interface ArticleGMapper extends BaseMapper<ArticleGDO> {
 
     LikeStarDO getArtLikeAndStar(Long articleId, Long userId, String type);
 
+    Long getArticleLikeCount(Long articleId, String type);
+
     Long insertArtLikeAndStar(Long articleId, Long userId, String type);
 
-    List<ArticleResp> getArticleByCommunityId(Long communityId);
+    Long getArticleCommentCount(Long articleId);
+
+    List<ArticleGDO> getArticleByCommunityId(Long communityId);
 }

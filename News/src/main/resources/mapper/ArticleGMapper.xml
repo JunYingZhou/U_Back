@@ -13,8 +13,8 @@
         <result property="userId" column="user_id"/>
     </resultMap>
     <insert id="addArticle" parameterType="top.continew.admin.news.model.Req.ArticleGReq" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO af_article (article_title, article_main, article_abstract, category_id, is_official, user_id)
-        VALUES (#{articleReq.articleTitle}, #{articleReq.articleMain}, #{articleReq.articleAbstract}, #{articleReq.categoryId}, #{articleReq.isOfficial}, #{articleReq.userId})
+        INSERT INTO af_article (article_title, article_main, article_abstract, category_id, is_community, community_id, is_official, user_id)
+        VALUES (#{articleReq.articleTitle}, #{articleReq.articleMain}, #{articleReq.articleAbstract}, #{articleReq.categoryId}, #{articleReq.isCommunity},#{articleReq.communityId}, #{articleReq.isOfficial}, #{articleReq.userId})
     </insert>
     <insert id="insertArtLikeAndStar">
         INSERT INTO af_like_star (article_id, user_id, type) VALUES (#{articleId}, #{userId}, #{type})
@@ -67,7 +67,13 @@
     <select id="getArtLikeAndStar" resultType="top.continew.admin.news.model.LikeStarDO">
         SELECT * FROM af_like_star WHERE article_id = #{articleId} and user_id = #{userId} and type = #{type}
     </select>
-    <select id="getArticleByCommunityId" resultType="top.continew.admin.news.model.resp.ArticleResp">
+    <select id="getArticleByCommunityId" resultType="top.continew.admin.news.model.ArticleGDO">
         SELECT * from af_article where community_id = #{communityId}
+    </select>
+    <select id="getArticleLikeCount" resultType="java.lang.Long">
+        SELECT count(*) FROM af_like_star WHERE article_id = #{articleId} and type = #{type}
+    </select>
+    <select id="getArticleCommentCount" resultType="java.lang.Long">
+        SELECT count(*) FROM af_comment WHERE article_id = #{articleId}
     </select>
 </mapper>
