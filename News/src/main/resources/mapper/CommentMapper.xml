@@ -12,6 +12,12 @@
         insert into af_questions(questions_title, questions_content, questions_state, questions_like_count, user_id, is_del, community_id, create_time
                                  ) values (#{questionsTitle}, #{questionsContent}, #{questionsState}, #{questionsLikeCount}, #{userId}, #{isDel}, #{communityId}, #{createTime})
     </insert>
+    <insert id="addAnswers">
+        insert into af_answers(question_id, user_id, comment_content, comment_root_id, comment_type, to_user_id) values (#{questionId}, #{userId}, #{commentContent}, #{commentRootId}, #{commentType}, #{toUserId})
+    </insert>
+    <insert id="addAnswersLike">
+        insert into af_comment_like(comment_id, user_id, question_id) values (#{commentId}, #{userId}, #{questionId})
+    </insert>
 
     <update id="updateComment">
         UPDATE af_comment
@@ -28,9 +34,26 @@
         SET comment_like_count = comment_like_count + 1
         WHERE comment_id = #{commentId} AND comment_like_count >= 0
     </update>
+    <update id="updateAnswers">
+        UPDATE af_answers
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="commentContent != null">comment_content = #{commentContent},</if>
+            <if test="commentLikeCount != null">comment_like_count = #{commentLikeCount},</if>
+            <if test="commentType != null">comment_type = #{commentType},</if>
+        </trim>
+        WHERE comment_id = #{commentId}
+    </update>
+    <update id="updateAnswersLike">
+        UPDATE af_answers
+        SET comment_like_count = comment_like_count + 1
+        WHERE comment_id = #{commentId} AND comment_like_count >= 0
+    </update>
 
     <delete id="deleteComment">
         DELETE FROM af_comment WHERE comment_id = #{commentId}
+    </delete>
+    <delete id="delAnswers">
+        DELETE FROM af_answers WHERE comment_id = #{commentId}
     </delete>
 
     <select id="queryAllComment" resultType="top.continew.admin.news.model.VO.CommentVO">
@@ -52,5 +75,24 @@
     </select>
     <select id="queryCommentLikeByUserId" resultType="top.continew.admin.news.model.VO.CommentLikeVO">
         select distinct * from af_comment_like where user_id = #{userId} and article_id=#{articleId}
+    </select>
+    <select id="queryAllAnswersById" resultType="top.continew.admin.news.model.VO.AnswersVO">
+        select c.comment_id,
+               c.question_id,
+               c.comment_content,
+               c.user_id,
+               c.to_user_id,
+               c.comment_root_id,
+               c.comment_like_count,
+               c.comment_type,
+               c.create_time,
+               u.avatar,
+               u.nickName
+        from af_answers c
+                 left join sys_user u on c.user_id = u.id
+        where c.question_id = #{questionId}
+    </select>
+    <select id="queryAnswersByUserId" resultType="top.continew.admin.news.model.VO.AnswersLikeVO">
+        select distinct * from af_answers_like where user_id = #{userId} and question_id=#{questionId}
     </select>
 </mapper>

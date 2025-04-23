@@ -21,9 +21,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.continew.admin.news.mapper.AntiUserMapper;
 import top.continew.admin.news.mapper.CommentMapper;
+import top.continew.admin.news.model.AnswersDO;
 import top.continew.admin.news.model.AntiUserDO;
 import top.continew.admin.news.model.CommentDO;
 import top.continew.admin.news.model.Req.QuestionsReq;
+import top.continew.admin.news.model.VO.AnswersLikeVO;
+import top.continew.admin.news.model.VO.AnswersVO;
 import top.continew.admin.news.model.VO.CommentLikeVO;
 import top.continew.admin.news.model.VO.CommentVO;
 import top.continew.admin.news.model.resp.QuestionsResp;
@@ -50,8 +53,18 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public List<AnswersVO> queryAllAnswersById(Long questionId) {
+        return mapper.queryAllAnswersById(questionId);
+    }
+
+    @Override
     public Long addComment(CommentDO commentDO) {
         return mapper.addComment(commentDO);
+    }
+
+    @Override
+    public Long addAnswers(AnswersDO answersDO) {
+        return mapper.addAnswers(answersDO);
     }
 
     @Override
@@ -60,8 +73,18 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public Long updateAnswers(AnswersDO answersDO) {
+        return mapper.updateAnswers(answersDO);
+    }
+
+    @Override
     public Long deleteComment(Long commentId) {
         return mapper.deleteComment(commentId);
+    }
+
+    @Override
+    public Long delAnswers(Long commentId) {
+        return mapper.delAnswers(commentId);
     }
 
     @Transactional
@@ -73,6 +96,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public Boolean addAnswersLike(Long commentId, Long userId, Long questionId) {
+        long l = mapper.updateAnswersLike(commentId);
+        long l1 = mapper.addAnswersLike(commentId, userId, questionId);
+        return null;
+    }
+
+    @Override
     public Long addQuestions(QuestionsResp questionsReq) {
         return mapper.addQuestions(questionsReq);
     }
@@ -80,6 +110,11 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentLikeVO> queryCommentByUserId(Long userId, Long articleId) {
         return mapper.queryCommentLikeByUserId(userId, articleId);
+    }
+
+    @Override
+    public List<AnswersLikeVO> queryAnswersByUserId(Long userId, Long articleId) {
+        return mapper.queryAnswersByUserId(userId, articleId);
     }
 
 }

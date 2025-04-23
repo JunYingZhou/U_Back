@@ -22,6 +22,7 @@ import top.continew.admin.news.model.ArticleGDO;
 import top.continew.admin.news.model.LikeStarDO;
 import top.continew.admin.news.model.Req.ArticleGReq;
 import top.continew.admin.news.model.resp.ArticleResp;
+import top.continew.admin.news.model.resp.QuestionsResp;
 import top.continew.starter.data.mp.base.BaseMapper;
 
 import java.util.List;
@@ -31,17 +32,36 @@ public interface ArticleGMapper extends BaseMapper<ArticleGDO> {
 
     List<ArticleGDO> getAllArticle(Long categoryId);
 
+    List<ArticleGDO> getArticleListByTitle(String title);
+
+
+    List<ArticleGDO> getArticleByUserId(Long userId);
+
+    List<ArticleGDO> getArticleStarListByUser(Long userId, String type);
+
     Long addArticle(@Param("articleReq") ArticleGReq articleReq);
 
     Long updateArticle(@Param("articleGDO") ArticleGDO articleGDO);
 
     LikeStarDO getArtLikeAndStar(Long articleId, Long userId, String type);
 
+    Long delArticleLikeStarStatus(Long articleId, Long userId, String type);
+
     Long getArticleLikeCount(Long articleId, String type);
+
+
+    Long updateStatus(Long status, Long id);
+
+
+    Long getArticleLikeCountByUserId(Long articleId);
 
     Long insertArtLikeAndStar(Long articleId, Long userId, String type);
 
     Long getArticleCommentCount(Long articleId);
 
     List<ArticleGDO> getArticleByCommunityId(Long communityId);
+
+    List<QuestionsResp> getQuestionByUserId(Long userId);
+
+    List<ArticleGDO> getArticleById(Long id);
 }

@@ -17,9 +17,12 @@
 package top.continew.admin.news.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import top.continew.admin.news.model.AnswersDO;
 import top.continew.admin.news.model.AntiUserDO;
 import top.continew.admin.news.model.CommentDO;
 import top.continew.admin.news.model.Req.QuestionsReq;
+import top.continew.admin.news.model.VO.AnswersLikeVO;
+import top.continew.admin.news.model.VO.AnswersVO;
 import top.continew.admin.news.model.VO.CommentLikeVO;
 import top.continew.admin.news.model.VO.CommentVO;
 import top.continew.admin.news.model.resp.QuestionsResp;
@@ -32,17 +35,31 @@ public interface CommentMapper extends BaseMapper<AntiUserDO> {
 
     List<CommentVO> queryAllComment(Long articleId);
 
+    List<AnswersVO> queryAllAnswersById(Long questionId);
+
     Long addComment(CommentDO commentDO);
+
+    Long addAnswers(AnswersDO answersDO);
 
     Long updateComment(CommentDO commentDO);
 
+    Long updateAnswers(AnswersDO answersDO);
+
     Long updateCommentLike(Long commentId);
+
+    Long updateAnswersLike(Long commentId);
 
     Long deleteComment(Long id);
 
+    Long delAnswers(Long id);
+
     Long addCommentLike(Long commentId,Long userId, Long articleId);
 
+    Long addAnswersLike(Long commentId,Long userId, Long questionId);
+
     List<CommentLikeVO> queryCommentLikeByUserId(Long userId, Long articleId);
+
+    List<AnswersLikeVO> queryAnswersByUserId(Long userId, Long questionId);
 
     Long addQuestions(QuestionsResp questionsReq);
 

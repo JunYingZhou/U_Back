@@ -47,6 +47,12 @@
         </set>
         WHERE id = #{articleGDO.id}
     </update>
+    <update id="updateStatus">
+        UPDATE af_article SET status = #{status} WHERE id = #{id}
+    </update>
+    <delete id="delArticleLikeStarStatus">
+        DELETE FROM af_like_star WHERE article_id = #{articleId} and user_id = #{userId} and type = #{type}
+    </delete>
 
 
     <select id="getAllArticle" resultMap="ArticleDO">
@@ -61,19 +67,40 @@
             u.user_id
         FROM af_article as u
         <if test="categoryId != null and categoryId != 100">
-            WHERE u.category_id = #{categoryId}
+            WHERE u.category_id = #{categoryId} and status = 2
+        </if>
+        <if test="categoryId == 100">
+            WHERE status = 2
         </if>
     </select>
     <select id="getArtLikeAndStar" resultType="top.continew.admin.news.model.LikeStarDO">
         SELECT * FROM af_like_star WHERE article_id = #{articleId} and user_id = #{userId} and type = #{type}
     </select>
     <select id="getArticleByCommunityId" resultType="top.continew.admin.news.model.ArticleGDO">
-        SELECT * from af_article where community_id = #{communityId}
+        SELECT * from af_article where community_id = #{communityId} and status = 2
     </select>
     <select id="getArticleLikeCount" resultType="java.lang.Long">
         SELECT count(*) FROM af_like_star WHERE article_id = #{articleId} and type = #{type}
     </select>
     <select id="getArticleCommentCount" resultType="java.lang.Long">
         SELECT count(*) FROM af_comment WHERE article_id = #{articleId}
+    </select>
+    <select id="getArticleByUserId" resultType="top.continew.admin.news.model.ArticleGDO">
+        SELECT * from af_article where user_id = #{userId}
+    </select>
+    <select id="getArticleLikeCountByUserId" resultType="java.lang.Long">
+        SELECT count(*) FROM af_like_star WHERE user_id = #{userId} and type = 'like'
+    </select>
+    <select id="getQuestionByUserId" resultType="top.continew.admin.news.model.resp.QuestionsResp">
+        SELECT * FROM af_questions WHERE user_id = #{userId}
+    </select>
+    <select id="getArticleListByTitle" resultType="top.continew.admin.news.model.ArticleGDO">
+        SELECT * FROM af_article WHERE article_title LIKE CONCAT('%',#{title},'%')
+    </select>
+    <select id="getArticleById" resultType="top.continew.admin.news.model.ArticleGDO">
+        SELECT * FROM af_article WHERE id = #{id} and status = 2
+    </select>
+    <select id="getArticleStarListByUser" resultType="top.continew.admin.news.model.ArticleGDO">
+        SELECT * FROM af_article WHERE id IN (SELECT article_id FROM af_like_star WHERE user_id = #{userId} and type = #{type})
     </select>
 </mapper>

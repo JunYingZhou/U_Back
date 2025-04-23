@@ -19,6 +19,7 @@ package top.continew.admin.news.service;
 import top.continew.admin.news.model.ArticleGDO;
 import top.continew.admin.news.model.LikeStarDO;
 import top.continew.admin.news.model.Req.ArticleGReq;
+import top.continew.admin.news.model.resp.QuestionsResp;
 
 import java.util.List;
 
@@ -26,15 +27,35 @@ public interface ArticleGService {
 
     List<ArticleGDO> getAllArticle(Long id);
 
+
+    List<ArticleGDO> getArticleById(Long id);
+
+    List<ArticleGDO> getArticleListByTitle(String title);
+
+    List<ArticleGDO> getArticleStarListByUser(Long userId, String type);
+
+
+    List<ArticleGDO> getArticleByUserId(Long id);
+
     Long addArticle(ArticleGReq articleDO);
+
+    Long updateStatus(Long status, Long id);
+
+
+    Long getArticleLikeCountByUserId(Long userId);
 
     Long updateArticle(Long articleId, String imageBase64);
 
     LikeStarDO getArticleLikeStarStatus(String s, String s1, String type);
 
+    Long delArticleLikeStarStatus(String s, String s1, String type);
+
     Long getArticleLikeStarStatusCount(Long articleId, String type);
 
     Long getArticleCommentCount(Long articleId);
+
+
+    List<QuestionsResp> getQuestionByUserId(Long userId);
 
 
 

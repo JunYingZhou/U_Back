@@ -29,6 +29,7 @@ import top.continew.admin.news.model.ArticleGDO;
 import top.continew.admin.news.model.LikeStarDO;
 import top.continew.admin.news.model.Req.ArtFileReq;
 import top.continew.admin.news.model.Req.ArticleGReq;
+import top.continew.admin.news.model.resp.QuestionsResp;
 import top.continew.admin.news.service.ArtFileService;
 import top.continew.admin.news.service.ArticleGService;
 import top.continew.starter.core.constant.StringConstants;
@@ -52,7 +53,25 @@ public class ArticleGController {
         return articleService.getAllArticle(id);
     }
 
+    @GetMapping("/{id}")
+    public List<ArticleGDO> getArticleById(@PathVariable Long id) {
+        return articleService.getArticleById(id);
+    }
 
+    @GetMapping("/listByTitle/{title}")
+    public List<ArticleGDO> getArticleListByTitle(@PathVariable String title) {
+        return articleService.getArticleListByTitle(title);
+    }
+
+    @GetMapping("/getArticleStarListByUser/{userId}/{type}")
+    public List<ArticleGDO> getArticleStarListByUser(@PathVariable Long userId, @PathVariable String type)  {
+        return articleService.getArticleStarListByUser(userId, type);
+    }
+
+    @GetMapping("/updateStatus/{status}/{id}")
+    public Long updateStatus(@PathVariable Long status, @PathVariable Long id)  {
+        return articleService.updateStatus(status, id);
+    }
 
 
     @SaIgnore
@@ -95,6 +114,12 @@ public class ArticleGController {
         return articleService.getArticleLikeStarStatus(tempArr[0], tempArr[1], type);
     }
 
+    @GetMapping("/delArticleLikeStarStatus/{queryIds}/{type}")
+    public Long delArticleLikeStarStatus(@PathVariable String queryIds, @PathVariable String type) {
+        String[] tempArr = queryIds.split(",");
+        return articleService.delArticleLikeStarStatus(tempArr[0], tempArr[1], type);
+    }
+
     @GetMapping("/getArticleLikeStarStatusCount/{articleId}/{type}")
     public Long getArticleLikeStarStatus(@PathVariable Long articleId, @PathVariable String type) {
         return articleService.getArticleLikeStarStatusCount(articleId, type);
@@ -103,6 +128,25 @@ public class ArticleGController {
     @GetMapping("/getArticleCommentCount/{articleId}")
     public Long getArticleCommentCount(@PathVariable Long articleId) {
         return articleService.getArticleCommentCount(articleId);
+    }
+
+
+
+    @GetMapping("/getArticleByUserId/{userId}")
+    public List<ArticleGDO> getArticleByUserId(@PathVariable Long userId) {
+        return articleService.getArticleByUserId(userId);
+    }
+
+
+    @GetMapping("/getArticleLikeCountByUserId/{userId}")
+    public Long getArticleLikeCountByUserId(@PathVariable Long userId) {
+        return articleService.getArticleLikeCountByUserId(userId);
+    }
+
+
+    @GetMapping("/getQuestionByUserId/{userId}")
+    public List<QuestionsResp> getQuestionByUserId(@PathVariable Long userId) {
+        return articleService.getQuestionByUserId(userId);
     }
 
     @GetMapping("/insertArticleLikeStarStatus/{queryIds}/{type}")

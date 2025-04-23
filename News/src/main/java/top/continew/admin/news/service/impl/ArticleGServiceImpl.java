@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import top.continew.admin.news.mapper.ArticleGMapper;
 import top.continew.admin.news.model.Req.ArticleReq;
+import top.continew.admin.news.model.resp.QuestionsResp;
 import top.continew.admin.news.service.ArticleGService;
 
 import java.util.List;
@@ -43,8 +44,42 @@ public class ArticleGServiceImpl implements ArticleGService {
     }
 
     @Override
+    public List<ArticleGDO> getArticleById(Long id) {
+        return articleMapper.getArticleById(id);
+    }
+
+    @Override
+    public List<ArticleGDO> getArticleListByTitle(String title) {
+        return articleMapper.getArticleListByTitle(title);
+    }
+
+    @Override
+    public List<ArticleGDO> getArticleStarListByUser(Long userId, String type) {
+        return articleMapper.getArticleStarListByUser(userId, type);
+    }
+
+    @Override
+    public List<ArticleGDO> getArticleByUserId(Long id) {
+
+
+
+
+        return articleMapper.getArticleByUserId(id);
+    }
+
+    @Override
     public Long addArticle(ArticleGReq articleDO) {
         return articleMapper.addArticle(articleDO);
+    }
+
+    @Override
+    public Long updateStatus(Long status, Long id) {
+        return articleMapper.updateStatus(status, id);
+    }
+
+    @Override
+    public Long getArticleLikeCountByUserId(Long userId) {
+        return articleMapper.getArticleLikeCountByUserId(userId);
     }
 
     @Override
@@ -62,6 +97,11 @@ public class ArticleGServiceImpl implements ArticleGService {
     }
 
     @Override
+    public Long delArticleLikeStarStatus(String s, String s1, String type) {
+        return articleMapper.delArticleLikeStarStatus(Long.parseLong(s), Long.parseLong(s1), type);
+    }
+
+    @Override
     public Long getArticleLikeStarStatusCount(Long articleId, String type) {
         return articleMapper.getArticleLikeCount(articleId, "like");
     }
@@ -69,6 +109,11 @@ public class ArticleGServiceImpl implements ArticleGService {
     @Override
     public Long getArticleCommentCount(Long articleId) {
         return articleMapper.getArticleCommentCount(articleId);
+    }
+
+    @Override
+    public List<QuestionsResp> getQuestionByUserId(Long userId) {
+        return articleMapper.getQuestionByUserId(userId);
     }
 
     @Override
