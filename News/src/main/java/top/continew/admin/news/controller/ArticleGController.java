@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import top.continew.admin.news.mapper.AntiArtFileMapper;
+import top.continew.admin.news.model.ArticleFileDO;
 import top.continew.admin.news.model.ArticleGDO;
 import top.continew.admin.news.model.LikeStarDO;
 import top.continew.admin.news.model.Req.ArtFileReq;
@@ -75,11 +76,51 @@ public class ArticleGController {
 
 
     @SaIgnore
+    @PostMapping("/upArticle")
+    public String upArticle(@RequestBody ArticleGDO article) {
+        System.out.println("文章"+article);
+        Long l = articleService.upArticle(article);
+        return l+"."+article.getId();
+    }
+
+    @SaIgnore
+    @PostMapping("/updateQuestions")
+    public String updateQuestions(@RequestBody QuestionsResp questionsResp) {
+        System.out.println("文章 +++++"+questionsResp);
+        Long l = articleService.updateQuestions(questionsResp);
+        return l+"."+questionsResp.getId();
+    }
+
+
+    @SaIgnore
     @PostMapping("/addArticle")
     public String addArticle(@RequestBody ArticleGReq article) {
         System.out.println("文章"+article);
         Long l = articleService.addArticle(article);
         return l+"."+article.getId();
+    }
+
+
+
+
+    @SaIgnore
+    @GetMapping("/delArticle/{articleId}")
+    public Long delArticle(@PathVariable Long articleId) {
+        return articleService.delArticle(articleId);
+    }
+
+
+    @SaIgnore
+    @GetMapping("/getArticleContentImages/{articleId}")
+    public List<ArticleFileDO> getArticleContentImages(@PathVariable Long articleId) {
+        return articleService.getArticleContentImages(articleId);
+    }
+
+
+    @SaIgnore
+    @GetMapping("/delQuestions/{questionId}")
+    public Long delQuestions(@PathVariable Long questionId) {
+        return articleService.delQuestions(questionId);
     }
 
 
@@ -96,6 +137,11 @@ public class ArticleGController {
 
     @PostMapping("/contentImagesUpload/{articleId}")
     public void addArticle1(@PathVariable Long articleId, MultipartFile contentImage) throws IOException {
+        // 先检查当前articles是否有图片，有的话就删除
+        Long l = artFileService.checkArtFile(articleId);
+        if(l > 0) {
+            artFileService.delArtFile(articleId);
+        }
         String avatarImageType = FileNameUtil.extName(contentImage.getOriginalFilename());
         CheckUtils.throwIf(!StrUtil.equalsAnyIgnoreCase(avatarImageType, avatarSupportSuffix), "仅支持 {} 格式的图片", String
                 .join(StringConstants.CHINESE_COMMA, avatarSupportSuffix));

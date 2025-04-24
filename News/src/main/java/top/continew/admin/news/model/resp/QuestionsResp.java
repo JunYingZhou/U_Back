@@ -23,6 +23,9 @@ public class QuestionsResp extends BaseResp {
     @Serial
     private static final long serialVersionUID = 1L;
 
+
+    private Long id;
+
     /**
      * 问题标题
      */

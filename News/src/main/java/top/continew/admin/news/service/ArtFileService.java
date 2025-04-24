@@ -22,4 +22,8 @@ public interface ArtFileService extends BaseService<ArtFileResp, ArtFileDetailRe
 
     List<ArtFileResp> getArtFile(Long articleId);
 
+    Long checkArtFile(Long articleId);
+
+    Long delArtFile(Long articleId);
+
 }

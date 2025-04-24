@@ -50,8 +50,59 @@
     <update id="updateStatus">
         UPDATE af_article SET status = #{status} WHERE id = #{id}
     </update>
+
+    <update id="updateQuestions">
+        UPDATE af_questions
+        <set>
+            <if test="questionsResp.questionsTitle != null">
+                questions_title = #{questionsResp.questionsTitle},
+                </if>
+                <if test="questionsResp.questionsContent != null">
+                    questions_content = #{questionsResp.questionsContent},
+                </if>
+        </set>
+        WHERE id = #{questionsResp.id}
+    </update>
+    <update id="upArticle">
+        UPDATE af_article
+        <set>
+            <if test="articleGDO.articleTitle != null">
+                article_title = #{articleGDO.articleTitle},
+            </if>
+            <if test="articleGDO.articleMain != null">
+                article_main = #{articleGDO.articleMain},
+            </if>
+            <if test="articleGDO.articleAbstract != null">
+                article_abstract = #{articleGDO.articleAbstract},
+            </if>
+            <if test="articleGDO.articleCoverUrl != null">
+                article_cover_url = #{articleGDO.articleCoverUrl},
+            </if>
+            <if test="articleGDO.categoryId != null">
+                category_id = #{articleGDO.categoryId},
+            </if>
+            <if test="articleGDO.isOfficial != null">
+                is_official = #{articleGDO.isOfficial},
+            </if>
+            <if test="articleGDO.userId != null">
+                user_id = #{articleGDO.userId},
+            </if>
+        </set>
+        WHERE id = #{articleGDO.id}
+    </update>
+
+
     <delete id="delArticleLikeStarStatus">
         DELETE FROM af_like_star WHERE article_id = #{articleId} and user_id = #{userId} and type = #{type}
+    </delete>
+    <delete id="delArticle">
+        DELETE FROM af_article WHERE id = #{id}
+    </delete>
+
+
+
+    <delete id="delQuestions">
+        DELETE FROM af_questions WHERE id = #{id}
     </delete>
 
 
@@ -102,5 +153,8 @@
     </select>
     <select id="getArticleStarListByUser" resultType="top.continew.admin.news.model.ArticleGDO">
         SELECT * FROM af_article WHERE id IN (SELECT article_id FROM af_like_star WHERE user_id = #{userId} and type = #{type})
+    </select>
+    <select id="getArticleContentImages" resultType="top.continew.admin.news.model.ArticleFileDO">
+        SELECT * FROM af_art_file WHERE article_id = #{articleId}
     </select>
 </mapper>

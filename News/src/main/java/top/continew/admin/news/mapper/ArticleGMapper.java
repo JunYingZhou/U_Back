@@ -18,10 +18,13 @@ package top.continew.admin.news.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import top.continew.admin.news.model.ArticleFileDO;
 import top.continew.admin.news.model.ArticleGDO;
 import top.continew.admin.news.model.LikeStarDO;
 import top.continew.admin.news.model.Req.ArticleGReq;
+import top.continew.admin.news.model.Req.QuestionsReq;
 import top.continew.admin.news.model.resp.ArticleResp;
+import top.continew.admin.news.model.resp.QuestionRepoResp;
 import top.continew.admin.news.model.resp.QuestionsResp;
 import top.continew.starter.data.mp.base.BaseMapper;
 
@@ -39,6 +42,9 @@ public interface ArticleGMapper extends BaseMapper<ArticleGDO> {
 
     List<ArticleGDO> getArticleStarListByUser(Long userId, String type);
 
+
+    List<ArticleFileDO> getArticleContentImages(Long articleId);
+
     Long addArticle(@Param("articleReq") ArticleGReq articleReq);
 
     Long updateArticle(@Param("articleGDO") ArticleGDO articleGDO);
@@ -51,6 +57,15 @@ public interface ArticleGMapper extends BaseMapper<ArticleGDO> {
 
 
     Long updateStatus(Long status, Long id);
+
+    Long delArticle(Long id);
+
+    Long upArticle(@Param("articleGDO") ArticleGDO articleGDO);
+
+
+    Long delQuestions(Long id);
+
+    Long updateQuestions(@Param("questionsResp") QuestionsResp questionsResp);
 
 
     Long getArticleLikeCountByUserId(Long articleId);

@@ -16,7 +16,7 @@
         insert into af_answers(question_id, user_id, comment_content, comment_root_id, comment_type, to_user_id) values (#{questionId}, #{userId}, #{commentContent}, #{commentRootId}, #{commentType}, #{toUserId})
     </insert>
     <insert id="addAnswersLike">
-        insert into af_comment_like(comment_id, user_id, question_id) values (#{commentId}, #{userId}, #{questionId})
+        insert into af_answers_like(comment_id, user_id, question_id) values (#{commentId}, #{userId}, #{questionId})
     </insert>
 
     <update id="updateComment">

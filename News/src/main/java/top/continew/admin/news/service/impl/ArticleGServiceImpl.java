@@ -15,6 +15,7 @@
  */
 
 package top.continew.admin.news.service.impl;
+import top.continew.admin.news.model.ArticleFileDO;
 import top.continew.admin.news.model.ArticleGDO;
 import top.continew.admin.news.model.LikeStarDO;
 import top.continew.admin.news.model.Req.ArticleGReq;
@@ -68,6 +69,11 @@ public class ArticleGServiceImpl implements ArticleGService {
     }
 
     @Override
+    public List<ArticleFileDO> getArticleContentImages(Long articleId) {
+        return articleMapper.getArticleContentImages(articleId);
+    }
+
+    @Override
     public Long addArticle(ArticleGReq articleDO) {
         return articleMapper.addArticle(articleDO);
     }
@@ -75,6 +81,27 @@ public class ArticleGServiceImpl implements ArticleGService {
     @Override
     public Long updateStatus(Long status, Long id) {
         return articleMapper.updateStatus(status, id);
+    }
+
+    @Override
+    public Long upArticle(ArticleGDO articleGReq) {
+        return articleMapper.upArticle(articleGReq);
+    }
+
+    @Override
+    public Long updateQuestions(QuestionsResp questionsResp) {
+        return articleMapper.updateQuestions(questionsResp);
+    }
+
+
+    @Override
+    public Long delArticle(Long id) {
+        return articleMapper.delArticle(id);
+    }
+
+    @Override
+    public Long delQuestions(Long id) {
+        return articleMapper.delQuestions(id);
     }
 
     @Override

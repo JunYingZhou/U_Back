@@ -16,6 +16,7 @@
 
 package top.continew.admin.news.service;
 
+import top.continew.admin.news.model.ArticleFileDO;
 import top.continew.admin.news.model.ArticleGDO;
 import top.continew.admin.news.model.LikeStarDO;
 import top.continew.admin.news.model.Req.ArticleGReq;
@@ -37,9 +38,19 @@ public interface ArticleGService {
 
     List<ArticleGDO> getArticleByUserId(Long id);
 
+    List<ArticleFileDO> getArticleContentImages(Long articleId);
+
     Long addArticle(ArticleGReq articleDO);
 
     Long updateStatus(Long status, Long id);
+
+    Long upArticle(ArticleGDO articleGReq);
+    Long updateQuestions(QuestionsResp questionsResp);
+
+
+    Long delArticle(Long id);
+
+    Long delQuestions(Long id);
 
 
     Long getArticleLikeCountByUserId(Long userId);

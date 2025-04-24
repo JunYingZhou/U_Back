@@ -32,4 +32,9 @@ public interface AntiArtFileMapper extends BaseMapper<ArtFileResp> {
     @Select("select * from af_art_file where article_id = #{articleId}")
     List<ArtFileResp> getArtFileByArticleId(@Param("articleId") Long articleId);
 
+    @Select("select count(*) from af_art_file where article_id = #{articleId}")
+    Long checkArtFile(@Param("articleId") Long articleId);
+    @Select("delete from af_art_file where article_id = #{articleId}")
+    Long delArtFile(@Param("articleId") Long articleId);
+
 }

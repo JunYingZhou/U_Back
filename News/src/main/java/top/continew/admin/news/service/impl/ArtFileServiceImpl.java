@@ -33,4 +33,14 @@ public class ArtFileServiceImpl extends BaseServiceImpl<ArtFileMapper, ArtFileDO
     public List<ArtFileResp> getArtFile(Long articleId) {
         return mapper.getArtFileByArticleId(articleId);
     }
+
+    @Override
+    public Long checkArtFile(Long articleId) {
+        return mapper.checkArtFile(articleId);
+    }
+
+    @Override
+    public Long delArtFile(Long articleId) {
+        return mapper.delArtFile(articleId);
+    }
 }
